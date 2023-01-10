@@ -1,0 +1,5 @@
+ASGI_HOST: 127.0.0.1
+ASGI_PORT: 8000
+GPU_AVAILABLE: true
+MASK_RCNN_PATH: layout-detector.pth
+GRAD_ENABLE: false

@@ -1,0 +1,23 @@
+version: "3.9"
+
+networks:
+  app-network:
+    name: "${DOCKER_NETWORK_NAME}"
+    driver: bridge
+
+services:
+  assessing-floor:
+    image: ${REGISTRY}${IMAGENAME}/${GIT_BRANCH}:latest
+    restart: unless-stopped
+    container_name: "${DOCKER_CONTAINER_NAME}"
+    environment:
+      ASGI_APP: "${ASGI_APP}"
+      ASGI_CONFIG_PATH: "${ASGI_CONFIG_PATH}"
+      ASGI_WORKER: "${ASGI_WORKER}"
+      GUNICORN_TIMEOUT: "${GUNICORN_TIMEOUT}"
+      GUNICORN_WORKERS: "${GUNICORN_WORKERS}"
+    volumes:
+      - "./layout-detector.pth:/usr/src/app/layout-detector.pth"
+      - "./${ASGI_CONFIG_PATH}:/usr/src/app/${ASGI_CONFIG_PATH}"
+    ports:
+    - "${GUNICORN_PORT}:8000"
